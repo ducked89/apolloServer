@@ -13,7 +13,7 @@ type User {
   password: String!
   pin: String
   company: Company
-  # displays: [Display!]!
+  displays: [Display!]!
   # contents: [Content!]!
   # playlists: [Playlist!]!
   status: StatusEnum!
