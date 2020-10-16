@@ -1,6 +1,3 @@
-const { User } = require("../../../models");
-// const { getUserID } = require("../../../utils/");
-
 module.exports = {
     Query: {
         users: async (parent, args, { models }) => {
@@ -15,10 +12,8 @@ module.exports = {
         }
     },
     User: {
-        // messages: async (user, args, { models }) => {
-        //     return await models.Message.find({
-        //         userId: user.id,
-        //     });
-        // },
+        company: async (user, args, { models }) => {
+            return await models.Company.findById( user.company );
+        },
     }
 };
