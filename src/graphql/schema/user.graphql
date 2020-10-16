@@ -1,0 +1,76 @@
+type Connection {
+  ip: String
+  browser: String
+  device: String
+  createdAt: Date
+}
+
+type User {
+  id: ID!
+  role: RoleEnum!
+  name: String!
+  username: String!
+  password: String!
+  status: StatusEnum!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type UserAuth {
+  id: ID!
+  username: String!
+  name: String!
+  role: RoleEnum!
+  status: StatusEnum!
+}
+
+type AuthPayload {
+  user: UserAuth!
+  token: String!
+}
+
+input UserCreateInput {
+  username: String!
+  name: String
+  password: String!
+  status: StatusEnum!
+  role: RoleEnum!
+}
+
+input UserEditInput {
+  username: String
+  name: String
+  password: String
+  status: StatusEnum
+}
+
+input UserSignInInput {
+  username: String!
+  password: String!
+}
+
+input DisplayToUser {
+  user: ID!
+  display: ID!
+}
+
+type Query {
+  users(id: ID): [User!]!
+  user(id: ID!): User
+  me: User!
+}
+
+type Token {
+  token: String!
+}
+
+type Mutation {
+  signUp(
+      data: UserCreateInput!
+    ): Token!
+  signIn(credentials: UserSignInInput): Token!
+  editUser(data: UserEditInput!): User!
+  # createUser(data: UserCreateInput!): User!
+  # updateUser(username: String!): User!
+  deleteUser(id: ID!): Boolean!
+}
