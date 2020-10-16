@@ -9,9 +9,12 @@ module.exports = {
                 return await models.Company.find({});
             },
         ),
-        company: async (parent, { id }, { models }) => {
-            return await models.Company.findById(id);
-        }
+        company: combineResolvers(
+            isAuthenticated,
+            async (parent, { id }, { models }) => {
+                return await models.Company.findById(id);
+            }
+        )
     },
     Company: {
         author: async (company, args, { models }) => {
