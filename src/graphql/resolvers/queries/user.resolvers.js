@@ -15,5 +15,8 @@ module.exports = {
         company: async (user, args, { models }) => {
             return await models.Company.findById( user.company );
         },
+        displays: async (user, args, { models }) => {
+            return await models.Display.find({ author: user.id });
+        }
     }
 };
