@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
 const DataLoader = require('dataloader');
 const express = require('express');
-const { ApolloServer, AuthenticationError, gql} = require('apollo-server');
+const { ApolloServer, AuthenticationError } = require('apollo-server');
 
 // Local modules
 const { connectDb } = require('./config/database');
@@ -37,8 +37,6 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   formatError: error => {
-    // remove the internal sequelize error message
-    // leave only the important validation error
     const message = error.message
       .replace('SequelizeValidationError: ', '')
       .replace('Validation error: ', '');
@@ -79,9 +77,8 @@ const server = new ApolloServer({
 });
 
 connectDb().then(async () => {
-  console.log("Mongodb running up!")
+  console.log("Mongodb running up!");
   server.listen({port:PORT}).then(({ url }) => {
     console.log(`🚀  Apollo Server on http://localhost:${PORT}/`);
   });
-
 });
