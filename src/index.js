@@ -8,7 +8,9 @@ const { ApolloServer, AuthenticationError, gql} = require('apollo-server');
 
 // Local modules
 const { connectDb } = require('./config/database');
-
+const models = require('./models');
+const resolvers = require('./graphql/resolvers');
+const typeDefs = require('./graphql/schema');
 
 const app = express();
 const PORT = process.env.PORT || process.env.APP_PORT;
@@ -21,30 +23,13 @@ const getMe = async req => {
 
   if (token) {
     try {
-      return await jwt.verify(token, process.env.SECRET);
+      return await jwt.verify(token, process.env.JWT_SECRET);
     } catch (e) {
       throw new AuthenticationError(
         'Your session expired. Sign in again.',
       );
     }
   }
-};
-
-
-const typeDefs = gql`
-  type Book {
-    title: String
-    author: String
-  }
-  type Query {
-    books: [Book]
-  }
-`;
-
-const resolvers = {
-    Query: {
-      books: () => books,
-    },
 };
 
 const server = new ApolloServer({
@@ -64,29 +49,30 @@ const server = new ApolloServer({
     };
   },
   context: async ({ req, connection }) => {
-    if (connection) {
-      return {
-        models,
-        loaders: {
-          user: new DataLoader(keys =>
-            loaders.user.batchUsers(keys, models),
-          ),
-        },
-      };
-    }
+    // if (connection) {
+    //   return {
+    //     models,
+    //     loaders: {
+    //       user: new DataLoader(keys =>
+    //         loaders.user.batchUsers(keys, models),
+    //       ),
+    //     },
+    //   };
+    // }
 
     if (req) {
       const me = await getMe(req);
-
       return {
+        req,
         models,
         me,
-        secret: process.env.SECRET,
-        loaders: {
-          user: new DataLoader(keys =>
-            loaders.user.batchUsers(keys, models),
-          ),
-        },
+        secret: process.env.JWT_SECRET,
+        exp_secret: process.env.JWT_EXPIRATION,
+        // loaders: {
+        //   user: new DataLoader(keys =>
+        //     loaders.user.batchUsers(keys, models),
+        //   ),
+        // },
       };
     }
   },
