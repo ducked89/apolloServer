@@ -11,6 +11,11 @@ type User {
   name: String!
   username: String!
   password: String!
+  pin: String
+  company: Company
+  # displays: [Display!]!
+  # contents: [Content!]!
+  # playlists: [Playlist!]!
   status: StatusEnum!
   createdAt: Date!
   updatedAt: Date!
@@ -33,6 +38,7 @@ input UserCreateInput {
   username: String!
   name: String
   password: String!
+  pin: String
   status: StatusEnum!
   role: RoleEnum!
 }
@@ -41,6 +47,7 @@ input UserEditInput {
   username: String
   name: String
   password: String
+  pin: String
   status: StatusEnum
 }
 
@@ -65,12 +72,8 @@ type Token {
 }
 
 type Mutation {
-  signUp(
-      data: UserCreateInput!
-    ): Token!
+  signUp(data: UserCreateInput!): Token!
   signIn(credentials: UserSignInInput): Token!
   editUser(data: UserEditInput!): User!
-  # createUser(data: UserCreateInput!): User!
-  # updateUser(username: String!): User!
   deleteUser(id: ID!): Boolean!
 }
