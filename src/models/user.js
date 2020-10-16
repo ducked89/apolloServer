@@ -5,8 +5,12 @@ const isEmail = require('validator/lib/isEmail');
 // Local module
 const { enumArray } = require("../constants");
 
-const userSchema = new mongoose.Schema(
-  {
+const userSchema = new mongoose.Schema({
+    pin: {
+      type: String,
+      minlength: 4,
+      maxlength: 6
+    },
     name: {
       type: String,
       required: true,
@@ -25,6 +29,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 7,
+    },
+    displays: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Display"
+      },
+    ],
+    playlists: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Playlist"
+      },
+    ],
+    company: {
+      type: mongoose.Types.ObjectId,
+      ref: "Company"
     },
     role: {
       type: String,
