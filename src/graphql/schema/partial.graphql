@@ -1,0 +1,35 @@
+type Address {
+  street: String
+  city: String
+  postale: String
+  state: String
+  country: String
+}
+
+input AddressInput {
+  street: String
+  city: String
+  postale: String
+  state: String
+  country: String
+}
+
+type Identification {
+  name: IdentificationEnum!
+  code: String!
+}
+
+input IdentificationInput {
+  name: IdentificationEnum!
+  code: String!
+}
+
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
+type Query {
+  uploads: [File]
+}

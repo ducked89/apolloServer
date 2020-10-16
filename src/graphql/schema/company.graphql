@@ -1,0 +1,38 @@
+type Company {
+  id: ID!
+  author: User!
+  name: String!
+  logo: String
+  email: String!
+  address: Address
+  status: StatusEnum!
+  createdAt: Date!
+  updatedAt: Date!
+  users: [User!]!
+}
+
+type CompanyData {
+  company: Company!
+  owner: User!
+}
+
+input CompanyDataInput {
+  name: String!
+  logo: String
+  email: String!
+  address: AddressInput
+}
+
+input CompanyCreateInput {
+  company: CompanyDataInput!
+  owner: UserCreateInput!
+}
+
+type Query {
+  company(id: ID): Company!
+  companies: [Company!]!
+}
+
+type Mutation {
+  createCompany(data: CompanyCreateInput!): CompanyData!
+}
