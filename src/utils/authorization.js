@@ -9,7 +9,7 @@ const isAdmin = combineResolvers(
   (parent, args, { me: { role } }) =>
     role === 'ADMIN'
     ? skip
-    : new ForbiddenError('Not authorized as admin.'),
+    : new ForbiddenError('Access Denied'), // or ('Not authorized as admin.'),
 );
 
 // const isMessageOwner = async ( parent, { id }, { models, me } ) => {
