@@ -1,0 +1,36 @@
+type Display {
+  id: ID!
+  user: User!
+  name: String!
+  code: String!
+  author: User!
+  description: String
+  orientation: OrientationEnum!
+  # playlists: [Playlist!]!
+  status: StatusEnum!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input DisplayCreateInput {
+  name: String!
+  code: String!
+  orientation: OrientationEnum
+  description: String
+}
+
+input PlaylistToDisplay {
+  playlist: ID!
+  display: ID!
+}
+
+type Query {
+  display(id: ID): Display!
+  displays: [Display!]!
+}
+
+type Mutation {
+  createDisplay(data: DisplayCreateInput!): Display!
+  # addPlaylistToDisplay(data: PlaylistToDisplay!): Display!
+  # removePlaylistToDisplay(data: PlaylistToDisplay!): Display!
+}
